@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 
 from app_modules.template_loader import load_template
 from app_modules.Sheets.Sammendrag.BRREG_info_getter import fetch_company_by_org, search_BRREG_live
-from app_modules.Sheets.Sammendrag.Proff_info_getter import get_proff_data
+from app_modules.Sheets.Sammendrag.Proff_info_getter import get_Proff_data
 from app_modules.Sheets.Sammendrag.BRREG_Proff_info_getter_merger import merge_company_data
 from app_modules.Sheets.Sammendrag.Summary_getter import generate_company_summary, place_summary
 from app_modules.pdf_parser import extract_fields_from_pdf
@@ -156,6 +156,7 @@ def run():
             excel_bytes=excel_bytes,
             company_name=merged_fields.get("company_name", "Selskap")
         )
+
 
 
 
