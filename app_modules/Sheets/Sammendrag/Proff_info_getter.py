@@ -7,7 +7,7 @@ PROFF_BASE_URL = "https://www.proff.no/selskap/{orgnr}"
 # ---------------------------------------------------------
 # Fetch HTML from Proff.no
 # ---------------------------------------------------------
-def fetch_proff_html(org_number: str):
+def fetch_Proff_html(org_number: str):
     """
     Downloads the Proff.no company page for the given org number.
     Returns HTML text or None.
@@ -128,12 +128,12 @@ def extract_financials(soup: BeautifulSoup):
 # ---------------------------------------------------------
 # High-level wrapper
 # ---------------------------------------------------------
-def get_proff_data(org_number: str) -> dict:
+def get_Proff_data(org_number: str) -> dict:
     """
     High-level wrapper: fetches Proff HTML and extracts revenue + financials.
     Returns a dict with keys used by the merger.
     """
-    html = fetch_proff_html(org_number)
+    html = fetch_Proff_html(org_number)
     if not html:
         return {}
 
