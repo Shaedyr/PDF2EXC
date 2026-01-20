@@ -1,5 +1,5 @@
 import requests
-import get_proff_data
+import get_Proff_data
 from bs4 import BeautifulSoup
 
 PROFF_BASE_URL = "https://www.proff.no/selskap/{orgnr}"
