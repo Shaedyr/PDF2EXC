@@ -153,5 +153,5 @@ def place_summary(ws, summary_text: str):
     """
     if not ws or not summary_text:
         return
-    # Example: put it in cell B5 (change if your template uses another cell)
-    ws["B5"] = summary_text
+    # Example: put it in cell B51 (change if your template uses another cell)
+    ws["B51"] = summary_text
