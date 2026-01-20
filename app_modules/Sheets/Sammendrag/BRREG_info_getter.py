@@ -81,6 +81,7 @@ def format_company_data(api_data):
         "address": "",
         "post_nr": "",
         "city": "",
+        "company_summary": "",
     }
 
     # Address
