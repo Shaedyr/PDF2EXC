@@ -14,7 +14,7 @@ CELL_MAP = {
         "company_today": "B13",        # Today's company status
         "profit_2024": "B15",          # Profit in 2024
         "economy": "B16",              # Economy / financial situation
-        "company_summary": "B17"       # Summary text (Om oss)
+        "company_summary": "B51"       # Summary text (Om oss)
     }
 }
  
