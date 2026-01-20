@@ -20,7 +20,7 @@ from app_modules import pdf_parser
 from app_modules.Sheets.Sammendrag import Summary_getter
 from app_modules import excel_filler
 from app_modules import template_loader
-from app_modules import download
+from app_modules import Excel_download
 from app_modules.Sheets.Sammendrag import Proff_info_getter
 from app_modules.Sheets.Sammendrag import BRREG_Proff_info_getter_merger
 
@@ -32,4 +32,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
