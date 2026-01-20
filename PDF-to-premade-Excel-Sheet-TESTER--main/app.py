@@ -15,7 +15,7 @@ st.markdown(hide_sidebar_style, unsafe_allow_html=True)
 
 # Imports
 from app_modules import main_page
-from app_modules.Sheets.Sammendrag import Brreg_info_getter
+from app_modules.Sheets.Sammendrag import BRREG_info_getter
 from app_modules import pdf_parser
 from app_modules.Sheets.Sammendrag import Summary_getter
 from app_modules import excel_filler
@@ -32,3 +32,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
