@@ -1,4 +1,6 @@
 import streamlit as st
+from io import BytesIO
+from openpyxl import load_workbook
 
 from app_modules.template_loader import load_template
 from app_modules.Sheets.Sammendrag.Brreg_info_getter import fetch_company_by_org, search_brreg_live
@@ -73,16 +75,9 @@ def run():
     template_bytes = st.session_state.template_bytes
 
     # ---------------------------------------------------------
-    # STEP 3: FETCH BRREG COMPANY DATA
+    # STEP 3: FETCH COMPANY DATA (BRREG + Proff merger)
     # ---------------------------------------------------------
     org_number = selected_company_raw.get("organisasjonsnummer")
-
-    raw_company_data = (
-        fetch_company_by_org(org_number)
-        if org_number
-        else selected_company_raw
-    )
-
     company_data = merge_company_data(org_number)
 
     # ---------------------------------------------------------
@@ -92,7 +87,6 @@ def run():
 
     if missing_keys:
         proff_data = fetch_from_proff(org_number)
-
         for key in missing_keys:
             if proff_data.get(key):
                 company_data[key] = proff_data[key]
@@ -147,11 +141,18 @@ def run():
                 field_values=merged_fields,
                 cell_map=CELL_MAP
             )
-               
+
+            # Place summary text into Sammendrag sheet
+            wb = load_workbook(filename=BytesIO(excel_bytes))
+            ws = wb["Sammendrag"]
+            place_summary(ws, summary_text)
+
+            out = BytesIO()
+            wb.save(out)
+            out.seek(0)
+            excel_bytes = out.getvalue()
 
         download_excel_file(
             excel_bytes=excel_bytes,
             company_name=merged_fields.get("company_name", "Selskap")
         )
-
-
