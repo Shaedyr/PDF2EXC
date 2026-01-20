@@ -1,5 +1,5 @@
 import streamlit as st
-from app_modules.Sheets.Sammendrag.BRREG_info_getter import search_brreg_live
+from app_modules.Sheets.Sammendrag.BRREG_info_getter import search_BRREG_live
 
 
 def get_user_inputs():
@@ -77,5 +77,6 @@ def run():
     st.title("📄 Input-modul")
     st.write("Last opp PDF og søk etter selskap.")
     st.info("Denne modulen brukes av hovedsiden for å hente input-data.")
+
 
 
