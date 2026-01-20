@@ -1,0 +1,32 @@
+from .Brreg_info_getter import get_brreg_data
+from .Proff_info_getter import get_proff_data
+
+
+def merge_company_data(org_number: str) -> dict:
+    """
+    Fetches BRREG + Proff data for a company and merges them.
+    - BRREG is primary source (identity, address, NACE, employees).
+    - Proff always overrides revenue_2024.
+    - Proff fills missing fields.
+    - Proff adds financials.
+    """
+
+    brreg_data = get_brreg_data(org_number) or {}
+    proff_data = get_proff_data(org_number) or {}
+
+    merged = brreg_data.copy()
+
+    # Always prefer Proff revenue
+    if proff_data.get("revenue_2024"):
+        merged["revenue_2024"] = proff_data["revenue_2024"]
+
+    # Add financials if present
+    if proff_data.get("financials"):
+        merged["financials"] = proff_data["financials"]
+
+    # Fill missing fields from Proff
+    for key, value in proff_data.items():
+        if not merged.get(key):
+            merged[key] = value
+
+    return merged
