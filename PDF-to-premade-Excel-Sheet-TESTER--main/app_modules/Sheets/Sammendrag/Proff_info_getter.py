@@ -121,3 +121,24 @@ def extract_financials(soup: BeautifulSoup):
             elif "sum eiend" in label:
                 out["sum_eiendeler"] = value
            
+def get_proff_data(org_number: str) -> dict:
+    """
+    High-level wrapper: fetches Proff HTML and extracts revenue + financials.
+    Returns a dict with keys used by the merger.
+    """
+    html = fetch_proff_html(org_number)
+    if not html:
+        return {}
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    data = {}
+    revenue = extract_revenue_2024(soup)
+    if revenue:
+        data["revenue_2024"] = revenue
+
+    financials = extract_financials(soup)
+    if financials:
+        data["financials"] = financials
+
+    return data
