@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-
 PROFF_BASE_URL = "https://www.proff.no/selskap/{orgnr}"
 
 
@@ -13,7 +12,6 @@ def fetch_proff_html(org_number: str):
     Downloads the Proff.no company page for the given org number.
     Returns HTML text or None.
     """
-
     if not org_number or not org_number.isdigit():
         return None
 
@@ -35,7 +33,6 @@ def extract_revenue_2024(soup: BeautifulSoup):
     Finds 'Sum driftsinntekter' for year 2024 in the Regnskap table.
     Returns integer revenue in NOK or None.
     """
-
     try:
         table = soup.find("table", {"class": "financial-table"})
         if not table:
@@ -81,7 +78,6 @@ def extract_financials(soup: BeautifulSoup):
     Extracts driftsresultat, resultat før skatt, sum eiendeler, egenkapital.
     Returns a dict or empty dict.
     """
-
     out = {}
 
     try:
@@ -120,7 +116,18 @@ def extract_financials(soup: BeautifulSoup):
                 out["resultat_for_skatt"] = value
             elif "sum eiend" in label:
                 out["sum_eiendeler"] = value
-           
+            elif "egenkapital" in label:
+                out["egenkapital"] = value
+
+        return out
+
+    except Exception:
+        return out
+
+
+# ---------------------------------------------------------
+# High-level wrapper
+# ---------------------------------------------------------
 def get_proff_data(org_number: str) -> dict:
     """
     High-level wrapper: fetches Proff HTML and extracts revenue + financials.
