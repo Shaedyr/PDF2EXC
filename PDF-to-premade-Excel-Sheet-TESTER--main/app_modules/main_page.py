@@ -3,7 +3,7 @@ from io import BytesIO
 from openpyxl import load_workbook
 
 from app_modules.template_loader import load_template
-from app_modules.Sheets.Sammendrag.Brreg_info_getter import fetch_company_by_org, search_brreg_live
+from app_modules.Sheets.Sammendrag.BRREG_info_getter import fetch_company_by_org, search_brreg_live
 from app_modules.Sheets.Sammendrag.Proff_info_getter import get_proff_data
 from app_modules.Sheets.Sammendrag.BRREG_Proff_info_getter_merger import merge_company_data
 from app_modules.Sheets.Sammendrag.Summary_getter import generate_company_summary, place_summary
@@ -156,3 +156,4 @@ def run():
             excel_bytes=excel_bytes,
             company_name=merged_fields.get("company_name", "Selskap")
         )
+
