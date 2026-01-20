@@ -1,4 +1,4 @@
-from app_modules.Sheets.Sammendrag.brreg_info_getter import get_brreg_data
+from app_modules.Sheets.Sammendrag.BRREG_info_getter import get_BRREG_data
 from app_modules.Sheets.Sammendrag.proff_info_getter import get_proff_data
 
 
