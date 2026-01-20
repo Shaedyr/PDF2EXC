@@ -1,11 +1,8 @@
 import streamlit as st
 import app_modules.input as input_module
 
-# Remove sidebar
-st.set_page_config(
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+# Configure layout (wide, no sidebar)
+st.set_page_config(layout="wide", initial_sidebar_state="collapsed")
 
 hide_sidebar_style = """
     <style>
@@ -16,32 +13,22 @@ hide_sidebar_style = """
 """
 st.markdown(hide_sidebar_style, unsafe_allow_html=True)
 
-# Clean imports
+# Imports
 from app_modules import main_page
-from app_modules import company_data
+from app_modules.Sheets.Sammendrag import Brreg_info_getter
 from app_modules import pdf_parser
-from app_modules import summary
+from app_modules.Sheets.Sammendrag import Summary_getter
 from app_modules import excel_filler
 from app_modules import template_loader
 from app_modules import download
+from app_modules.Sheets.Sammendrag import Proff_info_getter
+from app_modules.Sheets.Sammendrag import BRREG_Proff_info_getter_merger
 
-# Sidebar page mapping
-PAGES = {
-    "🏠 Hovedside": main_page,
-    "📄 Input-modul": input_module,
-    "🏢 Company Data": company_data,
-    "📄 PDF Parser": pdf_parser,
-    "📝 Summary Generator": summary,
-    "📊 Excel Filler": excel_filler,
-    "📁 Template Loader": template_loader,
-    "📥 Download": download,
-}
 
 def main():
-    st.sidebar.title("Navigasjon")
-    choice = st.sidebar.radio("Velg side:", list(PAGES.keys()))
-    page = PAGES[choice]
-    page.run()
+    # Run one default page directly (no sidebar navigation)
+    main_page.run()
+
 
 if __name__ == "__main__":
     main()
