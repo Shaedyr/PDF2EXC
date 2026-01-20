@@ -15,6 +15,19 @@ CELL_MAP = {
         "profit_2024": "B15",          # Profit in 2024
         "economy": "B16",              # Economy / financial situation
         "company_summary": "A51"       # Summary text (Om oss)
+
+        #Financial figures for the last 3 years 2024-2022 (Proff.no)
+        "revenue_2024": "E11",
+        "revenue_2023": "F11",
+        "revenue_2022": "G11",
+        "driftsresultat_2024": "E12",
+        "driftsresultat_2023": "F12",
+        "driftsresultat_2022": "G12",
+        "resultat_for_skatt_2024": "E13",
+        "resultat_for_skatt_2023": "F13",
+        "resultat_for_skatt_2022": "G13",
+
+
     }
 }
  
