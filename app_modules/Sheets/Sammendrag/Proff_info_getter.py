@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-PROFF_BASE_URL = "https://www.proff.no/selskap/{orgnr}"
+PROFF_BASE_URL =  f"https://www.proff.no/regnskap/{org_number}"
 
 # ---------------------------------------------------------
 # Fetch HTML from Proff.no
