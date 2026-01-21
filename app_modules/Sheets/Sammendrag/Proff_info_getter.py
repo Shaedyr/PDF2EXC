@@ -105,6 +105,8 @@ def get_Proff_data(org_number: str) -> dict:
         return {}
 
     print(html[:5000])   # TEMP DEBUG
+    print("HTML LENGTH:", len(html))
+
 
     soup = BeautifulSoup(html, "html.parser")
 
