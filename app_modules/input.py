@@ -1,5 +1,5 @@
 import streamlit as st
-from app_modules.Sheets.Sammendrag.BRREG_info_getter import search_BRREG_live
+from app_modules.sheets.sammendrag.BRREG_info_getter import search_BRREG_live
 
 
 def get_user_inputs():
