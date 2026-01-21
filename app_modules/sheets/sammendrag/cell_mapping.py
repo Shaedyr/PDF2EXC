@@ -1,5 +1,5 @@
 CELL_MAP = {
-    "Sammendrag": {
+    "sammendrag": {
         "company_name": "B3",
         "org_number": "B4",
         "address": "B5",
