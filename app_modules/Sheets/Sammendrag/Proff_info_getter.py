@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 
-PROFF_BASE_URL =  f"https://www.proff.no/regnskap/{org_number}"
-
 # ---------------------------------------------------------
 # Fetch HTML from Proff.no
 # ---------------------------------------------------------
@@ -14,7 +12,7 @@ def fetch_Proff_html(org_number: str):
     if not org_number or not org_number.isdigit():
         return None
 
-    url = PROFF_BASE_URL.format(orgnr=org_number)
+    url =  f"https://www.proff.no/regnskap/{org_number}"
 
     try:
         r = requests.get(url, timeout=10)
