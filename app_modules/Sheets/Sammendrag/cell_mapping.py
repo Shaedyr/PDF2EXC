@@ -12,7 +12,6 @@ CELL_MAP = {
         "nace_code": "B9",             # NACE code
         "nace_description": "B10",     # NACE description
         "homepage": "B11",             # Website
-        "revenue_2024": "B12",         # Revenue / turnover 2024
         "company_today": "B13",        # Today's company status
     
         "economy": "B16",              # Economy / financial situation
