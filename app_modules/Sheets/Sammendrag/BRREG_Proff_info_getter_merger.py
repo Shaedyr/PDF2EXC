@@ -29,4 +29,6 @@ def merge_company_data(org_number: str) -> dict:
         if not merged.get(key):
             merged[key] = value
 
+    print("MERGED KEYS:", merged.keys())
+
     return merged
