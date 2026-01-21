@@ -3,6 +3,9 @@ from app_modules.Sheets.Sammendrag.Proff_info_getter import get_Proff_data
 
 
 def merge_company_data(org_number: str) -> dict:
+    import streamlit as st
+    st.write("MERGER STARTED")
+
     """
     Fetches BRREG + Proff data for a company and merges them.
     - BRREG is primary source (identity, address, NACE, employees).
