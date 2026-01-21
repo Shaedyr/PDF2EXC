@@ -1,72 +1,71 @@
 import requests
-from bs4 import BeautifulSoup
 
-def fetch_Proff_html(org_number: str):
+BRREG_BASE_URL = "https://data.brreg.no/enhetsregisteret/api/enheter/"
+
+def fetch_company_by_org(org_number: str) -> dict:
+    """
+    Fetches company data from BRREG's public API.
+    Returns a dict with normalized fields or {} if not found.
+    """
+
     if not org_number or not org_number.isdigit():
-        return None
+        return {}
 
-    url = f"https://www.proff.no/regnskap/{org_number}"
+    url = f"{BRREG_BASE_URL}{org_number}"
 
     try:
         r = requests.get(url, timeout=10)
         r.raise_for_status()
-        return r.text
+        data = r.json()
     except Exception:
-        return None
+        return {}
 
-
-def extract_financials_all_years(soup: BeautifulSoup) -> dict:
-    out = {}
-
-    # NEW: Proff changed table class → use more flexible selector
-    table = soup.find("table")
-    if not table:
-        return out
-
-    rows = table.find_all("tr")
-    if not rows:
-        return out
-
-    # Detect year columns
-    header_cells = rows[0].find_all(["th", "td"])
-    years = {}
-    for idx, cell in enumerate(header_cells):
-        text = cell.get_text(strip=True)
-        if text.isdigit():
-            years[text] = idx
-
-    # Parse rows
-    for row in rows[1:]:
-        cells = row.find_all("td")
-        if not cells:
-            continue
-
-        label = cells[0].get_text(strip=True).lower()
-
-        for year, idx in years.items():
-            if idx >= len(cells):
-                continue
-
-            raw = cells[idx].get_text(strip=True)
-            cleaned = raw.replace(" ", "").replace(".", "").replace(",", "")
-            value = int(cleaned) if cleaned.isdigit() else None
-
-            if "driftsinntekter" in label:
-                out[f"revenue_{year}"] = value
-            elif "driftsresultat" in label:
-                out[f"driftsresultat_{year}"] = value
-            elif "resultat før skatt" in label:
-                out[f"resultat_for_skatt_{year}"] = value
+    # Normalize fields so your merger + summary modules can use them
+    out = {
+        "orgnr": data.get("organisasjonsnummer"),
+        "name": data.get("navn"),
+        "address": extract_address(data),
+        "poststed": extract_poststed(data),
+        "postnummer": extract_postnummer(data),
+        "company_summary": extract_summary_text(data),
+    }
 
     return out
 
 
-def get_Proff_data(org_number: str) -> dict:
-    html = fetch_Proff_html(org_number)
-    if not html:
-        return {}
+def extract_address(data: dict) -> str:
+    addr = data.get("forretningsadresse") or {}
+    return addr.get("adresse", [""])[0] if isinstance(addr.get("adresse"), list) else addr.get("adresse", "")
 
-    soup = BeautifulSoup(html, "html.parser")
 
-    data = extract_financials_all_years(soup)
-    return data
+def extract_poststed(data: dict) -> str:
+    addr = data.get("forretningsadresse") or {}
+    return addr.get("poststed", "")
+
+
+def extract_postnummer(data: dict) -> str:
+    addr = data.get("forretningsadresse") or {}
+    return addr.get("postnummer", "")
+
+
+def extract_summary_text(data: dict) -> str:
+    """
+    Creates a human-readable summary for your Summary sheet.
+    """
+    navn = data.get("navn", "")
+    orgnr = data.get("organisasjonsnummer", "")
+    sektor = data.get("naeringskode1", {}).get("beskrivelse", "")
+    etableringsdato = data.get("stiftelsesdato", "")
+
+    parts = []
+
+    if navn:
+        parts.append(f"{navn}")
+    if orgnr:
+        parts.append(f"Org.nr: {orgnr}")
+    if sektor:
+        parts.append(f"Næringskode: {sektor}")
+    if etableringsdato:
+        parts.append(f"Etablert: {etableringsdato}")
+
+    return " | ".join(parts)
