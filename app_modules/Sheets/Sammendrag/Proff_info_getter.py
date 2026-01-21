@@ -100,7 +100,8 @@ def extract_financials_all_years(soup: BeautifulSoup) -> dict:
 # Get_Proff_data
 # ---------------------------------------------------------
 def get_Proff_data(org_number: str) -> dict:
-    html = fetch_Proff_html(org_number)
+    html = fetch_Proff_html(org_number) print(html[:5000])
+
     if not html:
         return {}
 
