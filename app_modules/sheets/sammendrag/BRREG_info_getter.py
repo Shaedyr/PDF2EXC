@@ -32,6 +32,23 @@ def fetch_company_by_org(org_number: str) -> dict:
 
     return out
 
+def format_company_data(data: dict) -> dict:
+    """
+    Normalizes BRREG data into a consistent structure for merging
+    with Proff data.
+    """
+    if not data:
+        return {}
+
+    return {
+        "orgnr": data.get("orgnr"),
+        "name": data.get("name"),
+        "address": data.get("address"),
+        "poststed": data.get("poststed"),
+        "postnummer": data.get("postnummer"),
+        "company_summary": data.get("company_summary"),
+    }
+
 
 def extract_address(data: dict) -> str:
     addr = data.get("forretningsadresse") or {}
